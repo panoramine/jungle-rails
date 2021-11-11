@@ -25,9 +25,9 @@ end
 
 puts "Finding or Creating Categories ..."
 
-cat1 = Category.find_or_create_by! name: 'Apparel'
-cat2 = Category.find_or_create_by! name: 'Electronics'
-cat3 = Category.find_or_create_by! name: 'Furniture'
+cat1 = Category.find_or_create_by! name: 'Apparel', description: "Men's and women`s clothing"
+cat2 = Category.find_or_create_by! name: 'Electronics', description: "Electric devices"
+cat3 = Category.find_or_create_by! name: 'Furniture', description: "Beds, chairs and more!"
 
 ## PRODUCTS
 
