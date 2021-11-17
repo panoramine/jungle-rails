@@ -61,6 +61,24 @@ RSpec.describe User, type: :model do
       end
     end
 
+  end
+
+  describe '.authenticate_with_credentials' do
+    
+    describe 'test if email variation can still be authenticated' do
+      it 'should ignore blank spaces around email' do
+        @user = User.create(first_name: "Amy", last_name: "Smith", email: "amysmith@email.com", password: "55555", password_confirmation: "55555")
+        @user1 = User.authenticate_with_credentials("  amysmith@email.com ", "55555")
+        expect(@user1).to be_truthy
+      end
+
+      it 'should not be case sensitive' do
+        @user = User.create(first_name: "Amy", last_name: "Smith", email: "amysmith@email.com", password: "55555", password_confirmation: "55555")
+        @user1 = User.authenticate_with_credentials("amysmith@emaIl.com", "55555")
+        expect(@user1).to be_truthy
+      end
+    end
+
 
   end
 end
