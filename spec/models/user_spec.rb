@@ -27,31 +27,40 @@ RSpec.describe User, type: :model do
 
     describe 'test password validation' do
       it 'expect error if password is nil' do
-        @user = User.create(first_name: "Amy", last_name: "Smith", email: "amysmith@email.com", password: nil, password_confirmation: "111")
+        @user = User.create(first_name: "Amy", last_name: "Smith", email: "amysmith@email.com", password: nil, password_confirmation: "11111")
         expect(@user.errors.full_messages).to include("Password can't be blank")
       end
     end
 
     describe 'test password_confirmation validation' do
       it 'expect error if password_confirmation is nil' do
-        @user = User.create(first_name: "Amy", last_name: "Smith", email: "amysmith@email.com", password: "111", password_confirmation: nil)
+        @user = User.create(first_name: "Amy", last_name: "Smith", email: "amysmith@email.com", password: "11111", password_confirmation: nil)
         expect(@user.errors.full_messages).to include("Password confirmation can't be blank")
       end
     end
 
     describe 'test if passwrod matches with password_confirmation' do
       it 'expect error if password does not match password_confirmation' do
-        @user = User.create(first_name: "Amy", last_name: "Smith", email: "amysmith@email.com", password: "111", password_confirmation: "222")
+        @user = User.create(first_name: "Amy", last_name: "Smith", email: "amysmith@email.com", password: "11111", password_confirmation: "22222")
         expect(@user.errors.full_messages).to include("Password confirmation doesn't match Password")
       end
     end
 
     describe 'test if email is unique' do
       it 'expect error if email has been used before' do
-        @user = User.create(first_name: "Amy", last_name: "Smith", email: "amysmith@email.com", password: "111", password_confirmation: "111")
-        @user2 = User.create(first_name: "Clare", last_name: "Smith", email: "amysMith@email.com", password: "111", password_confirmation: "111")
+        @user = User.create(first_name: "Amy", last_name: "Smith", email: "amysmith@email.com", password: "11111", password_confirmation: "11111")
+        @user2 = User.create(first_name: "Clare", last_name: "Smith", email: "amysMith@email.com", password: "11111", password_confirmation: "11111")
         expect(@user2.errors.full_messages).to include("Email has already been taken")
       end
     end
+
+    describe 'validate password minimun length' do
+      it 'expect error if password is shorter than minimun length' do
+        @user = User.create(first_name: "Amy", last_name: "Smith", email: "amysmith@email.com", password: "4444", password_confirmation: "4444")
+        expect(@user.errors.full_messages).to include("Password is too short (minimum is 5 characters)")
+      end
+    end
+
+
   end
 end
